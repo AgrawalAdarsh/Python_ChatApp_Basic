@@ -1,2 +1,34 @@
-# Python_ChatApp_Basic
-This is a basic python_chatserver GUI based implememtation using flask,flask_socketio,python implementation
+# Python_ChatApp_Basic  
+
+This is a basic Python chat server GUI-based implementation using Flask, Flask-SocketIO, and Python.  
+
+## Steps to Execute:  
+
+1. **Create a virtual environment:**  
+  ```
+  python -m venv environment_name
+  ```
+2. **Activate the virtual environment:**  
+- **Windows (PowerShell):**  
+  ```
+  environment_name\Scripts\Activate.ps1
+  ```
+- **Linux/macOS:**  
+  ```
+  source environment_name/bin/activate
+  ```
+3. **Why use a virtual environment?**  
+> It helps in keeping your dependencies separate and is useful for proper package management.
+
+4. **Install dependencies:**  
+```
+pip install Flask pip install flask-socketio
+```
+5. **Add the necessary folders to the project folder.**  
+
+6. **Run the application:**  
+
+7. 🎉 **Yay! We're done with the project!**
+
+#### **Code Source:**  
+- **@Ady**, with the help of **@techwithtim** and **@chatGPT** 
