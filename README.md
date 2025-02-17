@@ -1,6 +1,13 @@
 # Python_ChatApp_Basic  
 
 This is a basic Python chat server GUI-based implementation using Flask, Flask-SocketIO, and Python.  
+## Features Include :
+1. **Room Creation**
+2. **Joining Rooms**
+3. **Message Sending**
+4. **Active Users List**
+5. **Disconnection Handling**
+6. **Separate RoomCode for Each Room randomly generated**
 
 ## Steps to Execute:  
 
