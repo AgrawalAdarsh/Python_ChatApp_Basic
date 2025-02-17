@@ -33,9 +33,13 @@ pip install Flask pip install flask-socketio
 ```
 5. **Add the necessary folders to the project folder.**  
 
-6. **Run the application:**  
+6. **Run the application:**
+7. **The virtual environment can be closed by:**
+```
+deactivate
+```
 
-7. 🎉 **Yay! We're done with the project!**
+9. 🎉 **Yay! We're done with the project!**
 
 #### **Code Source:**  
 - **@Ady**, with the help of **@techwithtim** and **@chatGPT** 
