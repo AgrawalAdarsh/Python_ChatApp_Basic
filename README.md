@@ -45,7 +45,7 @@ A simple real-time chat application built with Flask and Flask-SocketIO.
   http:<you-ip>:5000
   ```
   Ensure all the devices are on same network
-
+- **NOTE: ** To run the code on same network remember to check the network ipv4 to add on other devices rather than on which it is run....
 ## Requirements:
 
 - See requirements.txt for dependencies
