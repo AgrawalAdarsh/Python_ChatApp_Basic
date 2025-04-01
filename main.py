@@ -9,16 +9,18 @@ socketio = SocketIO(app)
 
 rooms = {}
 
+
 def generate_unique_code(length):
     while True:
         code = ""
         for _ in range(length):
             code += random.choice(ascii_uppercase)
-        
+
         if code not in rooms:
             break
-    
+
     return code
+
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -30,23 +32,33 @@ def home():
         create = request.form.get("create", False)
 
         if not name:
-            return render_template("home.html", error="Please enter a name.", code=code, name=name)
+            return render_template(
+                "home.html", error="Please enter a name.", code=code, name=name
+            )
 
-        if join != False and not code:
-            return render_template("home.html", error="Please enter a room code.", code=code, name=name)
-        
+        if join is not False and not code:
+            return render_template(
+                "home.html",
+                error="Please enter a room code.",
+                code=code,
+                name=name
+            )
+
         room = code
-        if create != False:
+        if create is not False:
             room = generate_unique_code(4)
             rooms[room] = {"members": 0, "messages": [], "users": []}
         elif code not in rooms:
-            return render_template("home.html", error="Room does not exist.", code=code, name=name)
-        
+            return render_template(
+                "home.html", error="Room does not exist.", code=code, name=name
+            )
+
         session["room"] = room
         session["name"] = name
         return redirect(url_for("room"))
 
     return render_template("home.html")
+
 
 @app.route("/room")
 def room():
@@ -54,21 +66,23 @@ def room():
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("home"))
 
-    return render_template("room.html", code=room, messages=rooms[room]["messages"])
+    return render_template(
+        "room.html",
+        code=room,
+        messages=rooms[room]["messages"])
+
 
 @socketio.on("message")
 def message(data):
     room = session.get("room")
     if room not in rooms:
-        return 
-    
-    content = {
-        "name": session.get("name"),
-        "message": data["data"]
-    }
+        return
+
+    content = {"name": session.get("name"), "message": data["data"]}
     send(content, to=room)
     rooms[room]["messages"].append(content)
     print(f"{session.get('name')} said: {data['data']}")
+
 
 @socketio.on("connect")
 def connect(auth):
@@ -79,16 +93,17 @@ def connect(auth):
     if room not in rooms:
         leave_room(room)
         return
-    
+
     join_room(room)
     rooms[room]["members"] += 1
     if "users" not in rooms[room]:  # Ensure "users" exists
         rooms[room]["users"] = []
     rooms[room]["users"].append(name)
-    
+
     send({"name": name, "message": "has entered the room"}, to=room)
     socketio.emit("update_users", rooms[room]["users"], to=room)
     print(f"{name} joined room {room}")
+
 
 @socketio.on("disconnect")
 def disconnect():
@@ -97,18 +112,19 @@ def disconnect():
     leave_room(room)
 
     if room in rooms:
-        if name in rooms[room]["users"]:  
+        if name in rooms[room]["users"]:
             rooms[room]["users"].remove(name)
         rooms[room]["members"] -= 1
         if rooms[room]["members"] <= 0:
             del rooms[room]
         else:
             socketio.emit("update_users", rooms[room]["users"], to=room)
-    
+
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
 
+
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=True)
-#enter you device ip like http://<your ip>:5000 to access.
-#remember to coonect to same network to create a path to access.
+# enter you device ip like http://<your ip>:5000 to access.
+# remember to coonect to same network to create a path to access.
